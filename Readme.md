@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
-* Студент: [Андрей Деев](https://up.htmlacademy.ru/javascript/20/user/1248713).
-* Наставник: `Неизвестно`.
+- Студент: [Андрей Деев](https://up.htmlacademy.ru/javascript/20/user/1248713).
+- Наставник: [Дмитрий Пальчук](https://htmlacademy.ru/profile/bulletok).
 
 ---
 
