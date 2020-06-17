@@ -32,8 +32,10 @@ var BOOKING_PHOTOS = [
 var BOOKING_TITLE = "Заголовок предложения ";
 var BOOKING_DESCRIPTION = "Описание предложения ";
 var map = document.querySelector(".map");
-var mainPin = document.querySelector(".map__pins")
-var pinTemplate = document.querySelector("#pin").content.querySelector(".map__pin");
+var mainPin = document.querySelector(".map__pins");
+var pinTemplate = document
+  .querySelector("#pin")
+  .content.querySelector(".map__pin");
 
 //  делаем поля и карту неактивными
 var addForm = document.querySelector(".ad-form");
@@ -48,7 +50,6 @@ for (var i = 0; i < fieldsets.length; i++) {
 }
 
 //  функция, для активации полей и карты
-
 
 //временно убираем класс .map--faded у карты
 // map.classList.remove("map--faded");
@@ -72,7 +73,8 @@ var getBooking = function (value) {
     },
     offer: {
       title: BOOKING_TITLE + value,
-      address: getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX) +
+      address:
+        getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX) +
         ", " +
         getRandomNumber(LOCATION_Y_MIN, LOCATION_Y_MAX),
       price: getRandomNumber(BOOKING_PRICE_MIN, BOOKING_PRICE_MAX),
@@ -89,7 +91,7 @@ var getBooking = function (value) {
       x: getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX),
       y: getRandomNumber(LOCATION_Y_MIN, LOCATION_Y_MAX),
     },
-  }
+  };
 };
 
 //  генерируем из объекта массив объектов
@@ -103,13 +105,16 @@ var getBookings = function () {
   return bookings;
 };
 
-var pinTemplate = document.querySelector("#pin").content.querySelector(".map__pin");
+var pinTemplate = document
+  .querySelector("#pin")
+  .content.querySelector(".map__pin");
 
-for (var i = 0; i < getBookings().length; i++) {
+var bookingArray = getBookings();
+for (var i = 0; i < bookingArray.length; i++) {
   var pinElem = pinTemplate.cloneNode(true);
-  // locX = getBookings().location.x;
-  // locY = getBookings().location.y;
-  // pinElem.style.left = toString(locX) + 'px';
+  var locX = bookingArray[i].location.x;
+  var locY = bookingArray[i].location.y;
+  pinElem.style.left = toString(locX) + "px";
 
   map.appendChild(pinElem);
 }
@@ -140,7 +145,6 @@ for (var i = 0; i < getBookings().length; i++) {
 // };
 
 // renderPinList(getBookings);
-
 
 var onActivePage = function () {
   map.classList.remove("map--faded");
