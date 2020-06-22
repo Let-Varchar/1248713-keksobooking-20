@@ -1,9 +1,9 @@
 "use strict";
-
+var map = document.querySelector(".map");
 var COUNT_OFFERS = 8;
 var LOCATION_X_MIN = 0;
-var LOCATION_X_MAX = 1200;
-var LOCATION_Y_MIN = 0;
+var LOCATION_X_MAX = map.clientWidth;
+var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
@@ -31,7 +31,9 @@ var BOOKING_PHOTOS = [
 ];
 var BOOKING_TITLE = "Заголовок предложения ";
 var BOOKING_DESCRIPTION = "Описание предложения ";
-var map = document.querySelector(".map");
+var cardTemplate = document
+  .querySelector("#card")
+  .content.querySelector(".map__card");
 var mainPin = document.querySelector(".map__pins");
 var pinTemplate = document
   .querySelector("#pin")
@@ -50,9 +52,6 @@ for (var i = 0; i < fieldsets.length; i++) {
 }
 
 //  функция, для активации полей и карты
-
-//временно убираем класс .map--faded у карты
-// map.classList.remove("map--faded");
 
 //получаем случайное число
 var getRandomNumber = function (min, max) {
@@ -88,8 +87,8 @@ var getBooking = function (value) {
       photos: getRandomValue(BOOKING_PHOTOS),
     },
     location: {
-      x: getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX),
-      y: getRandomNumber(LOCATION_Y_MIN, LOCATION_Y_MAX),
+      x: getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX - PIN_WIDTH),
+      y: getRandomNumber(LOCATION_Y_MIN, LOCATION_Y_MAX - PIN_HEIGHT),
     },
   };
 };
@@ -105,47 +104,29 @@ var getBookings = function () {
   return bookings;
 };
 
-var pinTemplate = document
-  .querySelector("#pin")
-  .content.querySelector(".map__pin");
-
-var bookingArray = getBookings();
-for (var i = 0; i < bookingArray.length; i++) {
+var pinRender = function () {
+  var pinTemplate = document
+    .querySelector("#pin")
+    .content.querySelector(".map__pin");
+  var bookingArray = getBookings();
   var pinElem = pinTemplate.cloneNode(true);
-  var locX = bookingArray[i].location.x;
-  var locY = bookingArray[i].location.y;
-  pinElem.style.left = toString(locX) + "px";
+  var moveX = PIN_WIDTH / 2;
+  var moveY = PIN_HEIGHT;
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < bookingArray.length; i++) {
+    var pinElem = pinTemplate.cloneNode(true);
+    pinElem.style.left = bookingArray[i].location.x - moveX + "px";
+    pinElem.style.top = bookingArray[i].location.y - moveY + "px";
+    pinElem.src = bookingArray[i].author.avatar;
+    pinElem.alt = bookingArray[i].offer.title;
+    fragment.appendChild(pinElem);
+  }
 
-  map.appendChild(pinElem);
-}
+  map.appendChild(fragment);
+};
+pinRender();
 
-//  первоночальный код
-// var createPin = function (getBookings) {
-//   var pinElem = pinTemplate.cloneNode(true);
-//   var pinImg = pinElem.querySelector("img");
-//   var moveX = PIN_WIDTH / 2;
-//   var moveY = PIN_HEIGHT;
-
-//   pinElem.style.left = getBookings().location.x - moveX + "px";
-//   pinElem.style.top = getBookings().location.y - moveY + "px";
-//   pinImg.src = getBookings().author.avatar;
-//   pinImg.alt = getBookings().offer.title;
-
-//   return pinElem;
-// };
-
-// var renderPinList = function (createPin) {
-//   var fragment = document.createDocumentFragment();
-
-//   for (var i = 0; i < getBookings.length; i++) {
-//     fragment.appendChild(createPin(getBookings[i]));
-//   }
-
-//   map.appendChild(fragment);
-// };
-
-// renderPinList(getBookings);
-
+//  функция активация карты
 var onActivePage = function () {
   map.classList.remove("map--faded");
   addForm.classList.remove("ad-form--disabled");
@@ -154,7 +135,6 @@ var onActivePage = function () {
     fieldsets[i].removeAttribute("disabled");
   }
 };
-
 //  при нажатии кнопки мыши карта и поля активируются
 
 mainButton.addEventListener("mousedown", function (evt) {
@@ -173,6 +153,7 @@ document.addEventListener("keydown", function (evt) {
   }
 });
 
+//  валидация полей по конмате и гостям
 var ROOMS_AND_GUESTS = {
   any: ["any"],
   1: ["1", "2"],
