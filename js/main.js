@@ -42,10 +42,6 @@ var ROOMS_AND_GUESTS = {
 
 var rooms = document.querySelector('#housing-rooms');
 var guests = document.querySelector('#housing-guests').options;
-var cardTemplate = document
-  .querySelector('#card')
-  .content.querySelector('.map__card');
-var mainPin = document.querySelector('.map__pins');
 var pinTemplate = document
   .querySelector('#pin')
   .content.querySelector('.map__pin');
@@ -73,7 +69,7 @@ var getRandomNumber = function (min, max) {
   return random;
 };
 
-//получаем случайный элемент массива
+//  получаем случайный элемент массива
 var getRandomValue = function (array) {
   return array[getRandomNumber(0, array.length)];
 };
@@ -145,6 +141,7 @@ var onActivePage = function () {
     fieldsets[i].removeAttribute('disabled');
   }
 };
+
 //  при нажатии кнопки мыши карта и поля активируются
 
 mainButton.addEventListener('mousedown', function (evt) {
