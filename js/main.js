@@ -49,7 +49,6 @@ var mainPin = document.querySelector(".map__pins");
 var pinTemplate = document
   .querySelector("#pin")
   .content.querySelector(".map__pin");
-var xbh = 2;
 //  делаем поля и карту неактивными
 var addForm = document.querySelector(".ad-form");
 var mainButton = document.querySelector(".map__pin--main");
