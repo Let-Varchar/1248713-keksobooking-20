@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-var map = document.querySelector(".map");
+var map = document.querySelector('.map');
 
 var COUNT_OFFERS = 8;
 var LOCATION_X_MIN = 0;
@@ -15,55 +15,55 @@ var BOOKING_ROOMS_MIN = 1;
 var BOOKING_ROOMS_MAX = 100;
 var BOOKING_GUESTS_MIN = 1;
 var BOOKING_GUESTS_MAX = 8;
-var BOOKING_TYPES = ["palace", "flat", "house", "bungalo"];
-var BOOKING_CHECKINS = ["12:00", "13:00", "14:00"];
-var BOOKING_CHECKOUTS = ["12:00", "13:00", "14:00"];
+var BOOKING_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var BOOKING_CHECKINS = ['12:00', '13:00', '14:00'];
+var BOOKING_CHECKOUTS = ['12:00', '13:00', '14:00'];
 var BOOKING_FEATURES = [
-  "wi-fi",
-  "dishwasher",
-  "parking",
-  "washer",
-  "elevator",
-  "conditioner",
+  'wi-fi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner',
 ];
 var BOOKING_PHOTOS = [
-  "http://o0.github.io/assets/images/tokyo/hotel1.jpg",
-  "http://o0.github.io/assets/images/tokyo/hotel2.jpg",
-  "http://o0.github.io/assets/images/tokyo/hotel3.jpg",
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
-var BOOKING_TITLE = "Заголовок предложения ";
-var BOOKING_DESCRIPTION = "Описание предложения ";
+var BOOKING_TITLE = 'Заголовок предложения ';
+var BOOKING_DESCRIPTION = 'Описание предложения ';
 var ROOMS_AND_GUESTS = {
-  any: ["any"],
-  1: ["1", "2"],
-  2: ["any", "2"],
-  3: ["0", "1", "2"],
+  any: ['any'],
+  1: ['1', '2'],
+  2: ['any', '2'],
+  3: ['0', '1', '2'],
 };
 
-var rooms = document.querySelector("#housing-rooms");
-var guests = document.querySelector("#housing-guests").options;
+var rooms = document.querySelector('#housing-rooms');
+var guests = document.querySelector('#housing-guests').options;
 var cardTemplate = document
-  .querySelector("#card")
-  .content.querySelector(".map__card");
-var mainPin = document.querySelector(".map__pins");
+  .querySelector('#card')
+  .content.querySelector('.map__card');
+var mainPin = document.querySelector('.map__pins');
 var pinTemplate = document
-  .querySelector("#pin")
-  .content.querySelector(".map__pin");
+  .querySelector('#pin')
+  .content.querySelector('.map__pin');
 //  делаем поля и карту неактивными
-var addForm = document.querySelector(".ad-form");
-var mainButton = document.querySelector(".map__pin--main");
-var mapFilters = document.querySelector(".map__filters");
+var addForm = document.querySelector('.ad-form');
+var mainButton = document.querySelector('.map__pin--main');
+var mapFilters = document.querySelector('.map__filters');
 
 //  функция дезактивации карты
 var offActivePage = function () {
-  var fieldsets = document.querySelectorAll("fieldset");
+  var fieldsets = document.querySelectorAll('fieldset');
 
   for (var i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].setAttribute("disabled", "true");
+    fieldsets[i].setAttribute('disabled', 'true');
   }
 
-  mapFilters.classList.add("ad-form--disabled");
-  addForm.classList.add("ad-form--disabled");
+  mapFilters.classList.add('ad-form--disabled');
+  addForm.classList.add('ad-form--disabled');
 };
 offActivePage();
 
@@ -82,13 +82,12 @@ var getRandomValue = function (array) {
 var getBooking = function (value) {
   return {
     author: {
-      avatar: "img/avatars/user0" + value + ".png",
+      avatar: 'img/avatars/user0' + value + '.png',
     },
     offer: {
       title: BOOKING_TITLE + value,
-      address:
-        getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX) +
-        ", " +
+      address: getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX) +
+        ', ' +
         getRandomNumber(LOCATION_Y_MIN, LOCATION_Y_MAX),
       price: getRandomNumber(BOOKING_PRICE_MIN, BOOKING_PRICE_MAX),
       type: getRandomValue(BOOKING_TYPES),
@@ -126,8 +125,8 @@ var renderPins = function () {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < bookingArray.length; i++) {
     var pinElem = pinTemplate.cloneNode(true);
-    pinElem.style.left = bookingArray[i].location.x - moveX + "px";
-    pinElem.style.top = bookingArray[i].location.y - moveY + "px";
+    pinElem.style.left = bookingArray[i].location.x - moveX + 'px';
+    pinElem.style.top = bookingArray[i].location.y - moveY + 'px';
     pinElem.src = bookingArray[i].author.avatar;
     pinElem.alt = bookingArray[i].offer.title;
     fragment.appendChild(pinElem);
@@ -139,26 +138,26 @@ renderPins();
 
 //  функция активация карты
 var onActivePage = function () {
-  map.classList.remove("map--faded");
-  addForm.classList.remove("ad-form--disabled");
-  mapFilters.classList.remove("ad-form--disabled");
+  map.classList.remove('map--faded');
+  addForm.classList.remove('ad-form--disabled');
+  mapFilters.classList.remove('ad-form--disabled');
   for (var i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].removeAttribute("disabled");
+    fieldsets[i].removeAttribute('disabled');
   }
 };
 //  при нажатии кнопки мыши карта и поля активируются
 
-mainButton.addEventListener("mousedown", function (evt) {
+mainButton.addEventListener('mousedown', function (evt) {
   if (evt.button === 0) {
     onActivePage();
   } else {
-    alert("Нужно нажать левую кнопку мыши");
+    alert('Нужно нажать левую кнопку мыши');
   }
 });
 
 //  активация полей и карты при нажатии клавиши Enter
-document.addEventListener("keydown", function (evt) {
-  if (evt.key === "Enter") {
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
     evt.preventDefault();
     onActivePage();
   }
@@ -174,13 +173,13 @@ function handleChangeRoom(evt) {
     var currentRoomValue = guests[i].value;
 
     if (validGuestValues.includes(currentRoomValue)) {
-      guests[i].removeAttribute("disabled");
-      guests[i].setAttribute("selected", "");
+      guests[i].removeAttribute('disabled');
+      guests[i].setAttribute('selected', '');
     } else {
-      guests[i].setAttribute("disabled", "");
-      guests[i].removeAttribute("selected");
+      guests[i].setAttribute('disabled', '');
+      guests[i].removeAttribute('selected');
     }
   }
 }
 
-rooms.addEventListener("change", handleChangeRoom);
+rooms.addEventListener('change', handleChangeRoom);
