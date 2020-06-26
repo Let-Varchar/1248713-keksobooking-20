@@ -45,6 +45,7 @@ var guests = document.querySelector('#housing-guests').options;
 var pinTemplate = document
   .querySelector('#pin')
   .content.querySelector('.map__pin');
+
 //  делаем поля и карту неактивными
 var addForm = document.querySelector('.ad-form');
 var mainButton = document.querySelector('.map__pin--main');
@@ -113,9 +114,11 @@ var getBookings = function () {
   return bookings;
 };
 
+var bookingArray = getBookings();
+
 var renderPins = function () {
-  var bookingArray = getBookings();
-  var pinElem = pinTemplate.cloneNode(true);
+
+
   var moveX = PIN_WIDTH / 2;
   var moveY = PIN_HEIGHT;
   var fragment = document.createDocumentFragment();
@@ -132,6 +135,30 @@ var renderPins = function () {
 };
 renderPins();
 
+
+var cardTempalte = document.querySelector('#card').content.querySelector('.popup');
+var mapFilterContainer = document.querySelector('.map__filters-container');
+
+
+var setCardInformation = function (object) {
+
+
+  var cardElem = cardTempalte.cloneNode(true);
+  var cardImage = cardElem.querySelector('.popup__avatar');
+  cardImage.src = object.author.avatar;
+  cardElem.querySelector('.popup__title').textContent = object.offer.title;
+  cardElem.querySelector('.popup__text--address').textContent = object.offer.address;
+  cardElem.querySelector('.popup__text--price').textContent = object.offer.price + ' Р/ночь';
+  cardElem.querySelector('.popup__type').textContent = object.offer.type;
+  cardElem.querySelector('.popup__text--capacity').textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
+  cardElem.querySelector('.popup__text--time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
+  cardElem.querySelector('.popup__description').textContent = object.offer.description;
+
+  map.insertBefore(cardElem, mapFilterContainer);
+};
+
+
+setCardInformation(bookingArray[1]);
 //  функция активация карты
 var onActivePage = function () {
   map.classList.remove('map--faded');
@@ -159,6 +186,10 @@ document.addEventListener('keydown', function (evt) {
     onActivePage();
   }
 });
+
+//  заполняем карточки
+
+
 
 //  валидация полей по конмате и гостям
 
